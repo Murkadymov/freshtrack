@@ -1,35 +1,42 @@
-const API_URL = 'http://localhost:8080/deliveries';
+async function addSupply() {
+    const form = document.getElementById('supplyForm');
+    const formData = new FormData(form);
 
-async function fetchDeliveries() {
-    try {
-        const response = await fetch(API_URL);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+    // Создаем объект данных в соответствии с ожидаемым форматом
+    const supply = {
+        driver: {
+            driverNumber: formData.get('driverNumber'),
+            tractorNumber: formData.get('truckNumber'),
+            trailNumber: formData.get('trailerNumber')
+        },
+        goods: {
+            cargo: formData.get('product')
+        },
+        manufacturer: {
+            name: formData.get('manufacturer'),
+            origin: formData.get('country')
         }
-        const deliveries = await response.json();
-        displayDeliveries(deliveries);
+    };
+
+    try {
+        const response = await fetch('http://localhost:8080/supply', { // Замените URL на URL вашего сервера
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(supply),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            document.getElementById('response').innerText = `Поставка добавлена: ${result.message}`;
+            // Обновите таблицу поставок или выполните другие действия по необходимости
+        } else {
+            document.getElementById('response').innerText = `Ошибка: ${result.error}`;
+        }
     } catch (error) {
-        console.error('Error fetching deliveries:', error);
+        console.error('Ошибка:', error);
+        document.getElementById('response').innerText = 'Ошибка при отправке данных';
     }
 }
-
-function displayDeliveries(deliveries) {
-    const deliveriesList = document.getElementById('deliveries-list');
-    deliveriesList.innerHTML = ''; // Очистка таблицы перед вставкой новых данных
-
-    deliveries.forEach(delivery => {
-        delivery.cargoes.forEach(cargo => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-        <td>${delivery.car.number}</td>
-        <td>${cargo.name}</td>
-        <td>${delivery.car.driver}</td>
-        <td>${delivery.from}</td>
-        <td>Unknown</td> <!-- В примере данных нет производителя, можно добавить поле если нужно -->
-      `;
-            deliveriesList.appendChild(row);
-        });
-    });
-}
-
-window.onload = fetchDeliveries;

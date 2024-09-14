@@ -22,11 +22,11 @@ func main() {
 		driver_id SERIAL PRIMARY KEY,
 		driver_number VARCHAR(30) NOT NULL,
 		tractor_number VARCHAR(30) NOT NULL,
-		manufacturer VARCHAR(30) NOT NULL);
+		trail_number VARCHAR(30) NOT NULL);
 
 		CREATE TABLE IF NOT EXISTS goods(
 		goods_id SERIAL PRIMARY KEY,
-		goods VARCHAR(30) NOT NULL);
+		cargo VARCHAR(30) NOT NULL);
 		
 		CREATE TABLE IF NOT EXISTS manufacturer(
 		manufacturer_id SERIAL PRIMARY KEY,
@@ -55,7 +55,7 @@ func main() {
 	//logg := logger2.NewLogger()
 
 	e := echo.New()
-
+	e.Static("/", "E:\\Projects\\freshtrack\\public")
 	e.POST("/supply", handler.AddSupply)
 
 	e.Start(":8080")
