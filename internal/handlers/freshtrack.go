@@ -42,7 +42,9 @@ func (h *Handler) AddSupply(c echo.Context) error {
 		log.Error(err)
 		return c.JSON(
 			http.StatusInternalServerError,
-			SendError(http.StatusInternalServerError, "Internal Server Error", "", nil),
+			fmt.Sprintf(
+				"error: %w",
+				SendError(http.StatusInternalServerError, "Internal Server Error", "", nil)),
 		)
 	}
 

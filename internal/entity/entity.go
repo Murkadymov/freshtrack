@@ -7,15 +7,15 @@ type Supply struct {
 }
 
 type Driver struct {
-	DriverNumber  string `json:"driverNumber"`
-	TractorNumber string `json:"tractorNumber"`
-	TrailNumber   string `json:"trailNumber"`
+	DriverNumber  string `json:"driverNumber" validate:"required"`
+	TractorNumber string `json:"tractorNumber" validate:"required"`
+	TrailNumber   string `json:"trailNumber" validate:"required"`
 }
 
 type Goods struct {
-	Cargo string `json:"cargo"`
+	Cargo string `json:"cargo" validate:"required"`
 }
 type Manufacturer struct {
-	Name   string `json:"name"`
-	Origin string `json:"origin"`
+	Name   string `json:"name" validate:"required"`
+	Origin string `json:"origin" validate:"required"`
 }
