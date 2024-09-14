@@ -32,10 +32,10 @@ func (r *Repository) AddSupply(e *entity.Supply) error {
 		e.DriverNumber, e.TractorNumber, e.TrailNumber).Scan(&driverID)
 	if err != nil {
 		if err := tx.Rollback(); err != nil {
-			return err
+			return fmt.Errorf("%s: %w", op, err)
 		}
 
-		return err
+		return fmt.Errorf("%s: %w", op, err)
 	}
 
 	fmt.Println("REPO REPO", driverID, e.DriverNumber)

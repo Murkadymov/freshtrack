@@ -4,11 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"freshtrack/internal/entity"
-	"freshtrack/internal/pkg/errors"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
 	"net/http"
-	"os"
 )
 
 type FreshTrackService interface {
@@ -32,15 +30,12 @@ func (h *Handler) AddSupply(c echo.Context) error {
 
 	err := json.NewDecoder(c.Request().Body).Decode(&supply)
 	if err != nil {
-		log.Error(op, err)
-		os.Exit(1)
+		return c.JSON(
+			http.StatusBadRequest,
+			SendError(http.StatusBadRequest, "Bad request", "Invalid JSON format", nil),
+		)
 	}
 	defer c.Request().Body.Close()
-
-	switch supply {
-	case nil:
-		return errors.SendError(c, http.StatusBadRequest, "Bad Request", "invalid JSON body", nil)
-	}
 
 	err = h.service.AddSupply(supply)
 	if err != nil {

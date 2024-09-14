@@ -1,6 +1,8 @@
-package errors
+package handlers
 
-import "github.com/labstack/echo/v4"
+import (
+	"fmt"
+)
 
 type ErrorResponse struct {
 	Status  int         `json:"status"`
@@ -18,7 +20,12 @@ func NewErrorResponse(status int, error, message string, details interface{}) *E
 	}
 }
 
-func SendError(c echo.Context, status int, error, message string, details interface{}) error {
+func SendError(status int, error, message string, details interface{}) error {
 	errResponse := NewErrorResponse(status, error, message, details)
-	return c.JSON(status, errResponse)
+	return fmt.Errorf(
+		"%d\n, %s\n, %s\n, %v\n",
+		errResponse.Status,
+		errResponse.Error,
+		errResponse.Message,
+		errResponse.Details)
 }

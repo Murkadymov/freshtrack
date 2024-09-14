@@ -1,9 +1,9 @@
 package entity
 
 type Supply struct {
-	Driver       `json:"driver"`
-	Goods        `json:"goods"`
-	Manufacturer `json:"manufacturer"`
+	Driver       `json:"driver,required"`
+	Goods        `json:"goods,required"`
+	Manufacturer `json:"manufacturer,required"`
 }
 
 type Driver struct {

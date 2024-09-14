@@ -24,8 +24,7 @@ func (s *Service) AddSupply(e *entity.Supply) error {
 
 	err := s.repo.AddSupply(e)
 	if err != nil {
-		fmt.Println("got error")
-		return err
+		return fmt.Errorf("%s: %w", op, err)
 	}
 
 	return nil
