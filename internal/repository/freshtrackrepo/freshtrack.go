@@ -16,7 +16,7 @@ func NewFreshTrackRepository(db *sql.DB) *Repository {
 	}
 }
 
-func (r *Repository) AddSupply(e entity.Supply) error {
+func (r *Repository) AddSupply(e *entity.Supply) error {
 	const op = "repository.freshtrackrepo.AddSupply"
 
 	tx, err := r.db.Begin()
@@ -31,8 +31,7 @@ func (r *Repository) AddSupply(e entity.Supply) error {
 				RETURNING driver_id;`,
 		e.DriverNumber, e.TractorNumber, e.TrailNumber).Scan(&driverID)
 	if err != nil {
-		err := tx.Rollback()
-		if err != nil {
+		if err := tx.Rollback(); err != nil {
 			return err
 		}
 

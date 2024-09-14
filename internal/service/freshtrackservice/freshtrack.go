@@ -6,7 +6,7 @@ import (
 )
 
 type Repository interface {
-	AddSupply(supply entity.Supply) error
+	AddSupply(supply *entity.Supply) error
 }
 
 type Service struct {
@@ -19,7 +19,7 @@ func NewService(repo Repository) *Service {
 	}
 }
 
-func (s *Service) AddSupply(e entity.Supply) error {
+func (s *Service) AddSupply(e *entity.Supply) error {
 	const op = "service.freshtrackrepo.AddSupply"
 
 	err := s.repo.AddSupply(e)
