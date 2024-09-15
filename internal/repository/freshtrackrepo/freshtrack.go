@@ -56,7 +56,7 @@ func (r *Repository) AddSupply(e *entity.Supply) error {
 		INSERT INTO manufacturer(name, origin)
 		VALUES($1, $2)
 		RETURNING manufacturer_id
-`, e.Manufacturer.Name, e.Manufacturer.Name).Scan(&manufacturerID)
+`, e.Manufacturer.Name, e.Manufacturer.Origin).Scan(&manufacturerID)
 	if err != nil {
 		if err := tx.Rollback(); err != nil {
 			return fmt.Errorf("%s: %w", op, err)

@@ -1,8 +1,14 @@
 async function addSupply() {
     const form = document.getElementById('supplyForm');
+
+    // Проверяем, есть ли пустые поля
+    if (!form.checkValidity()) {
+        document.getElementById('response').innerText = 'Все поля должны быть заполнены!';
+        return;
+    }
+
     const formData = new FormData(form);
 
-    // Создаем объект данных в соответствии с ожидаемым форматом
     const supply = {
         driver: {
             driverNumber: formData.get('driverNumber'),
@@ -19,7 +25,7 @@ async function addSupply() {
     };
 
     try {
-        const response = await fetch('http://localhost:8080/supply', { // Замените URL на URL вашего сервера
+        const response = await fetch('http://localhost:8080/supply', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -31,7 +37,7 @@ async function addSupply() {
 
         if (response.ok) {
             document.getElementById('response').innerText = `Поставка добавлена: ${result.message}`;
-            // Обновите таблицу поставок или выполните другие действия по необходимости
+            form.reset(); // очищаем форму после успешной отправки
         } else {
             document.getElementById('response').innerText = `Ошибка: ${result.error}`;
         }

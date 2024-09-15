@@ -13,26 +13,32 @@
 
 <main>
     <section>
-        <h2>Поставки</h2>
+        <h2>Добавление новой поставки</h2>
         <form id="supplyForm">
-            <label for="truckNumber">Номер тягача:</label>
-            <input type="text" id="truckNumber" name="truckNumber" required>
-            <br>
-            <label for="trailerNumber">Номер прицепа:</label>
-            <input type="text" id="trailerNumber" name="trailerNumber" required>
-            <br>
-            <label for="product">Товар:</label>
-            <input type="text" id="product" name="product" required>
-            <br>
-            <label for="driverNumber">Номер водителя:</label>
-            <input type="text" id="driverNumber" name="driverNumber" required>
-            <br>
-            <label for="country">Страна:</label>
-            <input type="text" id="country" name="country" required>
-            <br>
-            <label for="manufacturer">Производитель:</label>
-            <input type="text" id="manufacturer" name="manufacturer" required>
-            <br>
+            <div class="form-group">
+                <label for="truckNumber">Номер тягача:</label>
+                <input type="text" id="truckNumber" name="truckNumber" required placeholder="Введите номер тягача">
+            </div>
+            <div class="form-group">
+                <label for="trailerNumber">Номер прицепа:</label>
+                <input type="text" id="trailerNumber" name="trailerNumber" required placeholder="Введите номер прицепа">
+            </div>
+            <div class="form-group">
+                <label for="product">Товар:</label>
+                <input type="text" id="product" name="product" required placeholder="Введите наименование товара">
+            </div>
+            <div class="form-group">
+                <label for="driverNumber">Номер водителя:</label>
+                <input type="text" id="driverNumber" name="driverNumber" required placeholder="Введите номер водителя">
+            </div>
+            <div class="form-group">
+                <label for="country">Страна:</label>
+                <input type="text" id="country" name="country" required placeholder="Введите страну происхождения">
+            </div>
+            <div class="form-group">
+                <label for="manufacturer">Производитель:</label>
+                <input type="text" id="manufacturer" name="manufacturer" required placeholder="Введите производителя">
+            </div>
             <button type="button" onclick="addSupply()">Добавить поставку</button>
         </form>
         <div id="response"></div>
@@ -42,7 +48,7 @@
                 <th>Номер тягача</th>
                 <th>Номер прицепа</th>
                 <th>Товар</th>
-                <th>Номер Водителя</th>
+                <th>Номер водителя</th>
                 <th>Страна</th>
                 <th>Производитель</th>
             </tr>

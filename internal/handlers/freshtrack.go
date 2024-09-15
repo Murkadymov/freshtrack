@@ -40,17 +40,19 @@ func (h *Handler) AddSupply(c echo.Context) error {
 	err = h.service.AddSupply(supply)
 	if err != nil {
 		log.Error(err)
-		return c.JSON(
+		return c.JSONPretty(
 			http.StatusInternalServerError,
 			fmt.Sprintf(
 				"error: %w",
 				SendError(http.StatusInternalServerError, "Internal Server Error", "", nil)),
+			" ",
 		)
 	}
 
-	err = c.JSON(
-		http.StatusCreated,
-		fmt.Sprintf("поставка была добавлена %v: ", supply),
+	err = c.JSONPretty(
+		http.StatusOK,
+		OK(),
+		" ",
 	)
 	if err != nil {
 		log.Error(err)

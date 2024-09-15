@@ -2,17 +2,18 @@ package handlers
 
 import (
 	"fmt"
+	"net/http"
 )
 
-type ErrorResponse struct {
+type Response struct {
 	Status  int         `json:"status"`
 	Error   string      `json:"error"`
 	Message string      `json:"message"`
 	Details interface{} `json:"details,omitempty"`
 }
 
-func NewErrorResponse(status int, error, message string, details interface{}) *ErrorResponse {
-	return &ErrorResponse{
+func NewErrorResponse(status int, error, message string, details interface{}) *Response {
+	return &Response{
 		Status:  status,
 		Error:   error,
 		Message: error,
@@ -28,4 +29,10 @@ func SendError(status int, error, message string, details interface{}) error {
 		errResponse.Error,
 		errResponse.Message,
 		errResponse.Details)
+}
+
+func OK() *Response {
+	return &Response{
+		Status: http.StatusOK,
+	}
 }
