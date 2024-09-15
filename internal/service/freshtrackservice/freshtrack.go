@@ -3,10 +3,12 @@ package freshtrackservice
 import (
 	"fmt"
 	"freshtrack/internal/entity"
+	"log"
 )
 
 type Repository interface {
 	AddSupply(supply *entity.Supply) error
+	GetSupplyList() ([]entity.Supply, error)
 }
 
 type Service struct {
@@ -28,4 +30,12 @@ func (s *Service) AddSupply(e *entity.Supply) error {
 	}
 
 	return nil
+}
+
+func (s *Service) GetSupplyList() ([]entity.Supply, error) {
+	log.Println("started service getlist")
+	supplyList, _ := s.repo.GetSupplyList()
+	log.Println("ended service getlist")
+	return supplyList, nil
+
 }

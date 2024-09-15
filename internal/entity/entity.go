@@ -7,9 +7,9 @@ type Supply struct {
 }
 
 type Driver struct {
-	DriverNumber  string `json:"driverNumber" validate:"required"`
 	TractorNumber string `json:"tractorNumber" validate:"required"`
 	TrailNumber   string `json:"trailNumber" validate:"required"`
+	DriverNumber  string `json:"driverNumber" validate:"required"`
 }
 
 type Goods struct {

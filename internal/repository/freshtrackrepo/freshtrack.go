@@ -79,3 +79,43 @@ func (r *Repository) AddSupply(e *entity.Supply) error {
 	fmt.Println("End commit")
 	return tx.Commit()
 }
+
+func (r *Repository) GetSupplyList() ([]entity.Supply, error) {
+	const op = "repository.freshtrack.GetSupplyList"
+	r.db.Begin()
+	var supplyList []entity.Supply
+	rows, err := r.db.Query(`
+	SELECT
+	    public.drivers.tractor_number,
+    	public.drivers.trail_number,
+    	public.drivers.driver_number,
+    	public.goods.cargo,
+    	public.manufacturer.name,
+    	public.manufacturer.origin
+	FROM public.supplies
+	INNER JOIN public.drivers  ON public.drivers  .driver_id = public.supplies .driver_id
+	INNER JOIN public.goods ON public.goods .goods_id  = public.supplies.goods_id
+	INNER JOIN public.manufacturer ON public.manufacturer.manufacturer_id = public.supplies.manufacturer_id
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("%s: %w", op, err)
+	}
+
+	for rows.Next() {
+		var supply entity.Supply
+		err = rows.Scan(
+			&supply.TractorNumber,
+			&supply.TrailNumber,
+			&supply.DriverNumber,
+			&supply.Cargo,
+			&supply.Name,
+			&supply.Origin,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("%s: %w", op, err)
+		}
+		supplyList = append(supplyList, supply)
+	}
+
+	return supplyList, nil
+}

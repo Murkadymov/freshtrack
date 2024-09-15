@@ -11,6 +11,7 @@ import (
 
 type FreshTrackService interface {
 	AddSupply(supply *entity.Supply) error
+	GetSupplyList() ([]entity.Supply, error)
 }
 
 type Handler struct {
@@ -59,4 +60,13 @@ func (h *Handler) AddSupply(c echo.Context) error {
 	}
 
 	return nil
+}
+
+func (h *Handler) GetSupplylist(c echo.Context) error {
+	supplyList, err := h.service.GetSupplyList() //get slice of structs
+	if err != nil {
+		return err
+	}
+
+	return c.JSONPretty(http.StatusOK, supplyList, " ")
 }
