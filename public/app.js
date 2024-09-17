@@ -51,16 +51,18 @@ async function addSupply() {
 
 async function loadSupplies() {
     try {
-        const response = await fetch('http://localhost:8080/supplylist', {
+        const response = await fetch('http://localhost:8080/supply', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
         });
 
-        const supplies = await response.json();
+        const result = await response.json();
 
         if (response.ok) {
+            const supplies = result.details; // Доступ к массиву details
+
             const tableBody = document.getElementById('deliveries-list');
             tableBody.innerHTML = ''; // Очистка таблицы перед вставкой новых данных
 
@@ -98,7 +100,7 @@ async function loadSupplies() {
                 tableBody.appendChild(row);
             });
         } else {
-            document.getElementById('response').innerText = `Ошибка: ${supplies.error}`;
+            document.getElementById('response').innerText = `Ошибка: ${result.error}`;
         }
     } catch (error) {
         console.error('Ошибка:', error);

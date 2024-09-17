@@ -56,10 +56,10 @@ func main() {
 
 	e := echo.New()
 
-	e.Static("/", "E:\\Projects\\freshtrack\\public")
+	e.Static("/", "/Users/muradkadymov/Documents/freshtrack-main/public")
 
 	e.POST("/supply", handler.AddSupply)
-	e.GET("/supplylist", handler.GetSupplylist)
+	e.GET("/supply", handler.GetSupplyList)
 
 	e.Start(":8080")
 

@@ -2,10 +2,8 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"freshtrack/internal/entity"
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/gommon/log"
 	"net/http"
 )
 
@@ -27,46 +25,41 @@ func NewHandler(service FreshTrackService) *Handler {
 func (h *Handler) AddSupply(c echo.Context) error {
 	const op = "handlers.freshtrackrepo.AddSupply"
 
-	var supply *entity.Supply
+	var supply entity.Supply
 
 	err := json.NewDecoder(c.Request().Body).Decode(&supply)
 	if err != nil {
 		return c.JSON(
 			http.StatusBadRequest,
-			SendError(http.StatusBadRequest, "Bad request", "Invalid JSON format", nil),
+			h.error(err),
 		)
 	}
 	defer c.Request().Body.Close()
 
-	err = h.service.AddSupply(supply)
+	err = h.service.AddSupply(&supply)
 	if err != nil {
-		log.Error(err)
-		return c.JSONPretty(
+		return c.JSON(
 			http.StatusInternalServerError,
-			fmt.Sprintf(
-				"error: %w",
-				SendError(http.StatusInternalServerError, "Internal Server Error", "", nil)),
-			" ",
+			h.error(err),
 		)
 	}
 
-	err = c.JSONPretty(
-		http.StatusOK,
-		OK(),
-		" ",
+	err = c.JSON(
+		http.StatusCreated,
+		h.ok(echo.Map{"driver": supply.Driver, "goods": supply.Goods, "manufacturer": supply.Manufacturer}),
 	)
 	if err != nil {
-		log.Error(err)
+		return echo.NewHTTPError(500, error.Error(err))
 	}
 
 	return nil
 }
 
-func (h *Handler) GetSupplylist(c echo.Context) error {
+func (h *Handler) GetSupplyList(c echo.Context) error {
 	supplyList, err := h.service.GetSupplyList() //get slice of structs
 	if err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusInternalServerError, error.Error(err))
 	}
 
-	return c.JSONPretty(http.StatusOK, supplyList, " ")
+	return c.JSON(http.StatusOK, h.ok(supplyList))
 }

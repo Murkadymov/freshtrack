@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"freshtrack/internal/entity"
 	"log"
+	"log/slog"
 )
 
 type Repository interface {
@@ -22,10 +23,11 @@ func NewService(repo Repository) *Service {
 }
 
 func (s *Service) AddSupply(e *entity.Supply) error {
-	const op = "service.freshtrackrepo.AddSupply"
+	const op = "service.freshtrackservice.AddSupply"
 
 	err := s.repo.AddSupply(e)
 	if err != nil {
+		slog.Error(op+"addSupply", slog.String("error", err.Error()))
 		return fmt.Errorf("%s: %w", op, err)
 	}
 
@@ -33,9 +35,13 @@ func (s *Service) AddSupply(e *entity.Supply) error {
 }
 
 func (s *Service) GetSupplyList() ([]entity.Supply, error) {
+	const op = "service.freshtrackservice."
 	log.Println("started service getlist")
-	supplyList, _ := s.repo.GetSupplyList()
+	supplyList, err := s.repo.GetSupplyList()
+	if err != nil {
+		return nil, fmt.Errorf("%s + GetSupplyList: %w", op, err)
+	}
 	log.Println("ended service getlist")
-	return supplyList, nil
 
+	return supplyList, nil
 }

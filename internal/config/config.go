@@ -25,7 +25,7 @@ func NewConfig() *Config {
 func MustLoad() *Config {
 	config := NewConfig()
 
-	file, err := os.Open("E:\\Projects\\freshtrack\\internal\\config\\config.yaml")
+	file, err := os.Open("/Users/muradkadymov/Documents/freshtrack-main/internal/config/config.yaml")
 	if err != nil {
 		log.Fatalf("error loading config %v: ", err)
 	}
