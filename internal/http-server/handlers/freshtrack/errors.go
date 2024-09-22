@@ -1,4 +1,4 @@
-package handlers
+package freshtrack
 
 type Response struct {
 	OK      bool        `json:"ok"`

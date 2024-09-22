@@ -2,7 +2,9 @@ package main
 
 import (
 	"freshtrack/internal/config"
-	"freshtrack/internal/handlers"
+	"freshtrack/internal/http-server/handlers/freshtrack"
+	logger2 "freshtrack/internal/http-server/middleware/logger"
+	"freshtrack/internal/pkg/logger"
 	"freshtrack/internal/repository/freshtrackrepo"
 	"freshtrack/internal/repository/postgre"
 	"freshtrack/internal/service/freshtrackservice"
@@ -50,15 +52,15 @@ func main() {
 
 	repo := freshtrackrepo.NewFreshTrackRepository(db)
 	service := freshtrackservice.NewService(repo)
-	handler := handlers.NewHandler(service)
+	handler := freshtrack.NewHandler(service)
 
-	//logg := logger2.NewLogger()
+	log := logger.NewLogger()
 
 	e := echo.New()
 
-	e.Static("/", "/Users/muradkadymov/Documents/freshtrack-main/public")
+	e.Static("/", "E:\\Projects\\freshtrack\\public")
 
-	e.POST("/supply", handler.AddSupply)
+	e.POST("/supply", logger2.NewMiddlewareLogger(log, handler.AddSupply))
 	e.GET("/supply", handler.GetSupplyList)
 
 	e.Start(":8080")
