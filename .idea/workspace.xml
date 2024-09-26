@@ -5,15 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5c2a39b-46a1-47f1-b975-c0f87687d6c1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/internal/http-server/middleware/logger/logger.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/freshtrack-main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/freshtrack.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/http-server/handlers/filemanager/filemanager.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/freshtrack/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/freshtrack/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/handlers/errors.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/http-server/handlers/freshtrack/errors.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/handlers/freshtrack.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/http-server/handlers/freshtrack/freshtrack.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

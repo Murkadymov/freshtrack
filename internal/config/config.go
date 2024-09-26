@@ -27,11 +27,11 @@ func MustLoad() *Config {
 
 	file, err := os.Open("E:\\Projects\\freshtrack\\internal\\config\\config.yaml")
 	if err != nil {
-		log.Fatalf("error loading config %v: ", err)
+		log.Fatalf("error loading config %s:", err)
 	}
 
 	if err := yaml.NewDecoder(file).Decode(&config); err != nil {
-		log.Fatalf("error loading config %v: ", err)
+		log.Fatalf("error loading config %s:", err)
 	}
 
 	return config

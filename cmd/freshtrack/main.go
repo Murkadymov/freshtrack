@@ -2,6 +2,7 @@ package main
 
 import (
 	"freshtrack/internal/config"
+	"freshtrack/internal/http-server/handlers/filemanager"
 	"freshtrack/internal/http-server/handlers/freshtrack"
 	logger2 "freshtrack/internal/http-server/middleware/logger"
 	"freshtrack/internal/pkg/logger"
@@ -53,6 +54,7 @@ func main() {
 	repo := freshtrackrepo.NewFreshTrackRepository(db)
 	service := freshtrackservice.NewService(repo)
 	handler := freshtrack.NewHandler(service)
+	fileManager := filemanager.NewFileManager()
 
 	log := logger.NewLogger()
 
@@ -62,7 +64,10 @@ func main() {
 
 	e.POST("/supply", logger2.NewMiddlewareLogger(log, handler.AddSupply))
 	e.GET("/supply", handler.GetSupplyList)
+	e.POST("/upload", fileManager.UploadFile(log))
 
-	e.Start(":8080")
+	if err := e.Start(":8080"); err != nil {
+		panic("failed to start a server")
+	}
 
 }

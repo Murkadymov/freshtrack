@@ -49,6 +49,36 @@ async function addSupply() {
     }
 }
 
+async function uploadFileForSupply(supplyId) {
+    const fileInput = document.getElementById(`fileInput-${supplyId}`);
+    const formData = new FormData();
+
+    if (fileInput.files.length === 0) {
+        alert('Пожалуйста, выберите файл для загрузки');
+        return;
+    }
+
+    formData.append("file", fileInput.files[0]);
+
+    try {
+        const response = await fetch('http://localhost:8080/upload', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert(`Файл успешно загружен: ${result}`);
+        } else {
+            alert(`Ошибка при загрузке файла: ${result.error}`);
+        }
+    } catch (error) {
+        console.error('Ошибка при загрузке файла:', error);
+        alert('Ошибка при загрузке файла');
+    }
+}
+
 async function loadSupplies() {
     try {
         const response = await fetch('http://localhost:8080/supply', {
@@ -88,6 +118,13 @@ async function loadSupplies() {
                 const manufacturerCell = document.createElement('td');
                 manufacturerCell.innerText = supply.manufacturer.name;
 
+                // Ячейка с файлом
+                const fileUploadCell = document.createElement('td');
+                fileUploadCell.innerHTML = `
+                    <input type="file" id="fileInput-${supply.id}" />
+                    <button type="button" onclick="uploadFileForSupply(${supply.id})">Загрузить файл</button>
+                `;
+
                 // Добавляем все ячейки в строку
                 row.appendChild(tractorNumberCell);
                 row.appendChild(trailNumberCell);
@@ -95,6 +132,7 @@ async function loadSupplies() {
                 row.appendChild(cargoCell);
                 row.appendChild(countryCell);
                 row.appendChild(manufacturerCell);
+                row.appendChild(fileUploadCell); // Добавляем ячейку для загрузки файла
 
                 // Добавляем строку в таблицу
                 tableBody.appendChild(row);
